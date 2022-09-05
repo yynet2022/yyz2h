@@ -4,6 +4,7 @@ import os
 import pathlib
 import tempfile
 import chardet
+import tkinter.messagebox as tkMessageBox
 
 ZN = ''.join(chr(0xff01 + i) for i in range(94)) + '　'
 HN = ''.join(chr(0x21 + i) for i in range(94)) + ' '
@@ -25,4 +26,7 @@ for f in sys.argv[1:]:
             os.write(wfd, ln.translate(Z2H).encode('utf-8'))
             os.close(wfd)
     except Exception as e:
-        print(str(e))
+        r = tkMessageBox.showerror(
+            'yyz2h.Error', str(e) + '\n\n終了しますか？', type='yesno')
+        if r == 'yes':
+            sys.exit()
